@@ -382,12 +382,13 @@ while ~ex
           
           if((fvals(1) < fvals(2)) ~= (newval < val))
               if (fvals(1) < fvals(2)) > (newval < val)  % hier akzeptiert nur double
-                  fprintf('disagreement %s: ','(double accepts)')
+                  fprintf('Case A:\tdisagreement\t%s\t(numFunEvals=%i):\t','(double accepts)',numFunEvals)
               else % hier akzeptiert nur double nicht
-                  fprintf('disagreement %s: ','(double rejects)')
+                  fprintf('Case B:\tdisagreement\t%s\t(numFunEvals=%i):\t','(double rejects)',numFunEvals)
               end
-              fprintf('newval-val=%e ',newval-val);
-              fprintf('fvals(1)-fvals(2)=%e\n', fvals(1)- fvals(2));
+              fprintf('newval-val=\t%e\t',newval-val);
+              fprintf('fvals(1)-fvals(2)=\t%e', fvals(1)- fvals(2));
+              fprintf('\tdnormal-ddouble=\t%e\n',newval-val-(fvals(1)- fvals(2)));
           end
       else
           fvals = NaN(1,2);

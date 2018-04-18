@@ -19,7 +19,7 @@ try
     ar.p = ar.p+dp;
     
     doubleQFit('all')
-    arChi2(true)
+    arCalcMerit(true)
     depOnBoth = sum(abs(ar.sres(:,ar.iprimary) >1e-8 & ar.sres(:,ar.iref) >1e-8 ));
     if(sum(depOnBoth>0)>0)
         depOnBoth
@@ -44,7 +44,7 @@ try
     ar.std(ar.iref)      = in.std(ar.iprimary);
     ar.type(ar.iprimary) = in.type(ar.iref);
     ar.type(ar.iref)     = in.type(ar.iprimary);
-    arChi2
+    arCalcMerit
     fvals2 = doubleChi2;
     
     fvals1

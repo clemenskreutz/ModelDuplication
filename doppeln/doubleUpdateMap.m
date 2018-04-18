@@ -1,3 +1,8 @@
+% ar = doubleUpdateMap(ar,m,field,d)
+% 
+% This function searches for field entries which are termed according to
+% primary/seconary pairs (primary: "xxxx", secondary: "xxxx_")
+
 function ar = doubleUpdateMap(ar,m,field,d)
 if(~exist('d','var') || isempty(d))
     d = [];

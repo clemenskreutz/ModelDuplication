@@ -1,3 +1,6 @@
+% This function copies parameter information from primary to reference
+% parameters
+
 function doublePropagate
 global ar
 if(~isfield(ar,'isprimary'))

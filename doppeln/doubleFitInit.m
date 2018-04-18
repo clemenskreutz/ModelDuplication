@@ -1,3 +1,5 @@
+% This function prepares everything for fitting by model duplication
+
 function doubleFitInit
 
 global ar
