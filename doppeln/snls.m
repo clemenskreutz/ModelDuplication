@@ -376,7 +376,14 @@ while ~ex
 
       % Update fault tolerance structure
       faultTolStruct = updateFaultTolStruct(faultTolStruct,newval,verb > 1);
-
+      %%Finden 1
+      if ~isfield(ar , 'pt_count') 
+          ar.pt_count = 3;
+      end
+      if ar.pt_count > 10
+          ar.pt_count = 10;
+      end
+      
       if(usedouble)
           fvals = doubleChi2;
           
@@ -389,6 +396,14 @@ while ~ex
               fprintf('newval-val=\t%e\t',newval-val);
               fprintf('fvals(1)-fvals(2)=\t%e', fvals(1)- fvals(2));
               fprintf('\tdnormal-ddouble=\t%e\n',newval-val-(fvals(1)- fvals(2)));
+              %%Finden 2
+              if abs(newval-val-(fvals(1)- fvals(2))) > 1e2
+                    if ar.pt_count == 0
+                        return
+                    end
+                    arSave('Interessant_');
+                    ar.pt_count = ar.pt_count - 1;               
+              end
           end
       else
           fvals = NaN(1,2);
