@@ -1,4 +1,4 @@
-function ar = doubleReactions(ar,m)
+function ar = doubleReactions(ar,m,ODE_check)
 
 ar.model(m).v = [ar.model(m).v,ar.model(m).v];
 
@@ -60,9 +60,13 @@ ar.model(m).pv = [ar.model(m).map.old.pv;ar.model(m).map.new.pv];
 
 
 %% setting N
-iold = find(cellfun(@isempty,regexp(ar.model(m).x,'_$')));
-inew = setdiff(1:length(ar.model(m).x),iold);
-ar.model(m).N = [ar.model(m).N,[ar.model(m).N(inew,:);ar.model(m).N(iold,:)]];
+%Einschub Philipp: Für ODE Modelle gibt es einen Fehler, da ar.model.N
+%falsche Dimension hat? ->Zusätzliche N nicht notwendig?
+if ~ODE_check
+    iold = find(cellfun(@isempty,regexp(ar.model(m).x,'_$')));
+    inew = setdiff(1:length(ar.model(m).x),iold);
+    ar.model(m).N = [ar.model(m).N,[ar.model(m).N(inew,:);ar.model(m).N(iold,:)]];
+end
 
 % ar.model(m).N = zeros(length(ar.model(m).x),length(ar.model(m).fv));
 % for vcount = 1:length(ar.model(m).fv)

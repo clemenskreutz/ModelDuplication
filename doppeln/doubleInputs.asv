@@ -18,8 +18,8 @@ for i=1:length(ar.model(m).pu)
     ar.model(m).map.new.pu{i} = strcat(ar.model(m).map.old.pu{i},'_');
 end
 ar.model(m).pu = [ar.model(m).map.old.pu;ar.model(m).map.new.pu];
-%% Vorher: Ergebnis bei mehreren Inputs(Beispielhaft) = "Matrix(['___','___','___','___'])" bei 2 Inputs
-%  Siehe Oxygen_Metabolic_Rates_2016 zum Vergleich
+%% Vorher: Ergebnis bei mehreren Inputs = "Matrix(['___','___','___','___'])" bei 2 Inputs
+%  Siehe Oxygen_Metabolic_Rates_2016 zu
 for i=1:length(ar.model(m).fu)
     inp = char(subs(ar.model(m).fu{i},ar.model(m).map.old.pu,ar.model(m).map.new.pu));
     ar.model(m).fu{end+1} = inp;

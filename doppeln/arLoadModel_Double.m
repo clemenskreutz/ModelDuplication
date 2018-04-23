@@ -194,6 +194,8 @@ ar.model(m).fv_source = {};
 ar.model(m).fv_target = {};
 ar.model(m).fv_ma_reverse_pbasename = {};
 ar.model(m).vUnits = {};
+%Einschub Philipp
+ODE_check = 0;
 if(strcmp(C{1},'REACTIONS') || strcmp(C{1},'REACTIONS-AMOUNTBASED'))
     ar.model(m).isReactionBased = true;
     if(strcmp(C{1},'REACTIONS-AMOUNTBASED'))
@@ -393,9 +395,11 @@ elseif(strcmp(C{1},'ODES'))
         end
         str = textscan(fid, '%q\n',1, 'CommentStyle', ar.config.comment_string);
     end
-    if(ode_count ~= length(ar.model(m).x))
+    %%Einschub Philipp: Überspringen des Fehlers
+    if(ode_count ~= length(ar.model(m).x(1,1:(length(ar.model(m).x)/2))))
         error('number of ODES ~= number of variables');
     end
+    ODE_check = 1;
     ar.model(m).N = eye(length(ar.model(m).x));
 end
 ar.model(m).qPlotV = ones(1,length(ar.model(m).fv));
@@ -418,7 +422,7 @@ ar = doubleUpdateMap(ar,m,'px');
 ar.model(m).p = union(ar.model(m).px, ar.model(m).pu); %R2013a compatible
 ar = doubleUpdateMap(ar,m,'p');
 
-ar = doubleReactions(ar,m);
+ar = doubleReactions(ar,m,ODE_check);
 
 % setup rhs
 C = cell(size(ar.model(m).N));
