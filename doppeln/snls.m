@@ -380,10 +380,13 @@ while ~ex
       if ~isfield(ar , 'pt')
           ar.pt = {};
       end
+      if ~isfield(ar.pt , 'mag')
+          ar.pt.mag = 1e3;
+      end
       if ~isfield(ar.pt , 'saveEvents')
           ar.pt.saveEvents = 0;
       end
-      if ~isfield(ar , 'pt.count') 
+      if ~isfield(ar.pt , 'count') 
           ar.pt.count = 3;
       end
       if ar.pt.count > 10
