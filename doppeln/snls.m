@@ -205,9 +205,14 @@ val = fvec(:,1)'*fvec(:,1);
 
 global ar
 if(isfield(ar.config,'useDouble') && ar.config.useDouble==1)
+    qFit = ar.qFit;
     arp = NaN(size(ar.qFit));
     arp(ar.qFit) = x; % parameterwerte vorhergehender Iterationsschritt
-    ar.p(ar.iref) = arp(ar.iprimary);% parameterwerte vorhergehender Iterationsschritt auf ar.iref kopieren
+    if (isfield(ar , 'iref_correction') && isfield(ar , 'iprimary_correction'))
+        ar.p(ar.iref_correction) = arp(ar.iprimary_correction);% parameterwerte vorhergehender Iterationsschritt auf ar.iref kopieren
+    else
+        ar.p(ar.iref) = arp(ar.iprimary);
+    end
 end
 
 usedouble = isfield(ar.config,'useDouble') && ar.config.useDouble==1;
@@ -395,7 +400,7 @@ while ~ex
       
       if(usedouble)
           fvals = doubleChi2;
-          
+
           if((fvals(1) < fvals(2)) ~= (newval < val))
               if (fvals(1) < fvals(2)) > (newval < val)  % hier akzeptiert nur double
                   fprintf('Case A:\tdisagreement\t%s\t(numFunEvals=%i):\t','(double accepts)',numFunEvals)
@@ -447,10 +452,15 @@ while ~ex
 %       if faultTolStruct.currTrialWellDefined && newval < val
       if faultTolStruct.currTrialWellDefined && ( (usedouble && fvals(1) < fvals(2)) || (newval < val && ~usedouble))
          
-         if(isfield(ar.config,'useDouble') && ar.config.useDouble==1)
+        if(isfield(ar.config,'useDouble') && ar.config.useDouble==1)
              arp = NaN(size(ar.qFit));
              arp(ar.qFit) = x; % parameterwerte vorhergehender Iterationsschritt
-             ar.p(ar.iref) = arp(ar.iprimary);% parameterwerte vorhergehender Iterationsschritt auf ar.iref kopieren
+             %ar.p(ar.iref) = arp(ar.iprimary);
+             if (isfield(ar , 'iref_correction') && isfield(ar , 'iprimary_correction'))
+                ar.p(ar.iref_correction) = arp(ar.iprimary_correction);% parameterwerte vorhergehender Iterationsschritt auf ar.iref kopieren
+             else
+                 ar.p(ar.iref) = arp(ar.iprimary);
+             end
          end
          
          x = newx; 
