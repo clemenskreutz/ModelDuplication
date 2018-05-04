@@ -54,11 +54,11 @@ for i=1:length(ar.model(m).data(d).map.old.py_sep)
     if (length(ar.model(m).data(d).map.old.py_sep(i).pars) > 0)
         for j=1:length(ar.model(m).data(d).map.old.py_sep(i).pars)
             tmp = char(subs(subs(subs(subs(ar.model(m).data(d).map.old.py_sep(i).pars{j},  ar.model(m).map.old.x,ar.model(m).map.new.x),  ar.model(m).data(d).map.old.py,  ar.model(m).data(d).map.new.py),ar.model(m).data(d).map.old.pystd, ar.model(m).data(d).map.new.pystd),  ar.model(m).map.old.u,ar.model(m).map.new.u));
-            ar.model(m).data(d).map.new.py_sep(i).pars{j} = tmp;
+            ar.model(m).data(d).map.new.py_sep(i).pars{1,j} = tmp;
         end
     else
         ar.model(m).data(d).map.new.py_sep = ar.model(m).data(d).map.old.py_sep;
         return
     end
 end
- ar.model(m).data(d).py_sep = [ar.model(m).data(d).map.old.py_sep, ar.model(m).data(d).map.new.py_sep];
+ar.model(m).data(d).py_sep = [ar.model(m).data(d).map.old.py_sep, ar.model(m).data(d).map.new.py_sep];
