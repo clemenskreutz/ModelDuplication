@@ -1,6 +1,9 @@
 % [ar1,ar2]=doubleCheck
 %
-function varargout = doubleCheck
+function varargout = doubleCheck(dp_factor)
+if ~exist('dp_factor','var') || isempty(dp_factor)
+    dp_factor = 1;
+end
 
 global ar
 
@@ -25,7 +28,7 @@ try
     in.std = ar.std;
     in.type = ar.type;
     
-    dp = rand(size(ar.p))-.5;
+    dp = rand(size(ar.p))*dp_factor-.5*dp_factor;
     
     ar.p = ar.p+dp;
     

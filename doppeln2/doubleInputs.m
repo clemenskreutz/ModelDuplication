@@ -22,8 +22,11 @@ for i=1:length(ar.model(m).fu)
     ar.model(m).map.new1.fu{i} = char(subs(ar.model(m).fu{i},ar.model(m).map.old.pu,ar.model(m).map.new1.pu));
     ar.model(m).map.new2.fu{i} = char(subs(ar.model(m).fu{i},ar.model(m).map.old.pu,ar.model(m).map.new2.pu));
 end
-ar.model(m).fu = [ar.model(m).map.new1.fu,ar.model(m).map.new2.fu];
-
+if size(ar.model(m).map.new1.fu,1)>1
+    ar.model(m).fu = [ar.model(m).map.new1.fu;ar.model(m).map.new2.fu];
+else
+    ar.model(m).fu = [ar.model(m).map.new1.fu,ar.model(m).map.new2.fu];
+end
 
 
 % %% Vorher: Ergebnis bei mehreren Inputs(Beispielhaft) = "Matrix(['___','___','___','___'])" bei 2 Inputs
