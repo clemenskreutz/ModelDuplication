@@ -40,6 +40,10 @@ else
     if(~isfield(ar,'qFit_reference'))
         ar.qFit_reference = ar.qFit;
     end
+    if(~isfield(ar,'type_reference'))
+        ar.type_reference = ar.type;
+    end
+    
     for m=1:length(ar.model)
         for d=1:length(ar.model(m).data)
             if ~isfield(ar.model(m).data(d),'qFit_reference') || isempty(ar.model(m).data(d).qFit_reference)
@@ -62,6 +66,16 @@ else
         ar.qFit(ar.isprimary) = 0;
     else
         error('case not yet implemented.')
+    end
+
+    if ischar(doprimary) && strcmp(doprimary,'all')==1
+        ar.type = ar.type_reference;    
+    elseif(doprimary)
+        ar.type = ar.type_reference;
+        ar.type(~ar.isprimary) = 0;
+    else
+        ar.type = ar.type_reference;
+        ar.type(ar.isprimary) = 0;
     end
     
     for m=1:length(ar.model)
