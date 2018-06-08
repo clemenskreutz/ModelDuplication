@@ -134,13 +134,13 @@ while(~strcmp(str{1},'PREDICTOR') && ~strcmp(str{1},'PREDICTOR-DOSERESPONSE'))
 end
 
 % PREDICTOR
-if(strcmp(str{1},'PREDICTOR-DOSERESPONSE'))
-    % the problem is that in the dublicated model, there are two different
-    % predictors (doses) which hampers subsequenct code (e.g. plotting).
-    warning('arLoadData_Double cannot handle PREDICTOR-DOSERESPONSE. Switch to standard predictor (time). This only has an impact on plotting.');
-    tmp = textscan(fid, '%s', 1, 'CommentStyle', ar.config.comment_string); % this value is ignored
-    str{1} = 'PREDICTOR';
-end
+% if(strcmp(str{1},'PREDICTOR-DOSERESPONSE'))
+%     % the problem is that in the dublicated model, there are two different
+%     % predictors (doses) which hampers subsequenct code (e.g. plotting).
+%     warning('arLoadData_Double cannot handle PREDICTOR-DOSERESPONSE. Switch to standard predictor (time). This only has an impact on plotting.');
+%     tmp = textscan(fid, '%s', 1, 'CommentStyle', ar.config.comment_string); % this value is ignored
+%     str{1} = 'PREDICTOR';
+% end
 if(strcmp(str{1},'PREDICTOR-DOSERESPONSE'))
     ar.model(m).data(d).doseresponse = true;
     str = textscan(fid, '%s', 1, 'CommentStyle', ar.config.comment_string);
