@@ -449,7 +449,7 @@ while ~ex
          
          if(isfield(ar.config,'useDouble') && ar.config.useDouble==1)
              arp = NaN(size(ar.qFit));
-             arp(ar.qFit) = x; % parameterwerte vorhergehender Iterationsschritt
+             arp(ar.qFit==1) = x; % parameterwerte vorhergehender Iterationsschritt
              ar.p(ar.iref) = arp(ar.iprimary);% parameterwerte vorhergehender Iterationsschritt auf ar.iref kopieren
          end
          
