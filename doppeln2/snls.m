@@ -205,9 +205,15 @@ val = fvec(:,1)'*fvec(:,1);
 
 global ar
 if(isfield(ar.config,'useDouble') && ar.config.useDouble==1)
-    arp = NaN(size(ar.qFit));
+    arp = ar.p;
     arp(ar.qFit==1) = x; % parameterwerte vorhergehender Iterationsschritt
     ar.p(ar.iref) = arp(ar.iprimary);% parameterwerte vorhergehender Iterationsschritt auf ar.iref kopieren
+    if sum(isnan(ar.p))
+        error('NaNs in ar.p: This should not occur. Was doubleFitInit performed?')
+    end
+    if ~isempty(intersect(find(ar.qFit),ar.iref))
+        error('Some ref params have qFit==1: This should not occur. Was doubleFitInit performed?')
+    end
 end
 
 usedouble = isfield(ar.config,'useDouble') && ar.config.useDouble==1;
@@ -448,7 +454,7 @@ while ~ex
       if faultTolStruct.currTrialWellDefined && ( (usedouble && fvals(1) < fvals(2)) || (newval < val && ~usedouble))
          
          if(isfield(ar.config,'useDouble') && ar.config.useDouble==1)
-             arp = NaN(size(ar.qFit));
+             arp = ar.p;
              arp(ar.qFit==1) = x; % parameterwerte vorhergehender Iterationsschritt
              ar.p(ar.iref) = arp(ar.iprimary);% parameterwerte vorhergehender Iterationsschritt auf ar.iref kopieren
          end
